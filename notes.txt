@@ -9,3 +9,70 @@ const requireAdmin = function (req, res, next) {
 }
 
 module.exports = requireAdmin;
+
+//// for some reason the below didn't work
+});
+const db = monk(url);
+const cors = require('cors')
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
+const bodyParser = require('body-parser')
+const path = require('path')
+// const db2 = require('./db/db')
+// const collection = 'things';
+MongoClient.connect(url, (err,db) => {
+    if (err) return console.log(fuckup)
+});
+
+
+//app.use(cors())
+
+const items = db.get('things')
+
+// app.get('/',  async (req, res) => {
+//     res.sendFile(path.join(_dirname,'index.html'));});
+ 
+ 
+app.get('/products', async (req, res) => { 
+    const results =  await items.find({})
+    res.status(200).send(results)});
+
+app.get('/products/:id', async (req, res) => { 
+        const results =  await items.find(req.params.id)
+        res.status(200).send(results)});
+/// path in browser DOES NOT include colon
+
+
+app.post('/products', async (req, res) => {
+    const result = await items.insert(req.body)
+    res.status(200).send(result)
+})
+
+/// for the above get and post, '/products is the URL path that would need to change when connected to host
+
+
+ 
+// app.put('/products/:id',async (req, res) =>{
+//     thingsId = await items.find(req.params.id);
+//     updatedItem = req.body;
+//     if(items["name"] != null) {
+//      items["name"] = updatedItem;
+    
+//      console.log("Item updated correctly you fucker!")
+//      res.end("Update Successful")}
+//      else{
+//          res.end("You fucked up!")
+//      }
+     
+//     });
+
+app.delete('/products/:id', async (req, res) => {
+    deleteItem = await items.find(req.params._id);
+    delete items["name" + req.params._id];
+    console.log("Item deleted");
+    res.end("Deleted item")
+
+})
+
+app.listen(port, () => console.log(`Express is listening on port ${port}`))
+// console.log uses backticks, not quotes
