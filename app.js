@@ -29,6 +29,14 @@ app.post('/products/add', (req, res) => {
     })
 });
 
+app.get('/products', (req, res) => {
+    dbase.collection('things').find().toArray( (err, results) => {
+    res.send(results)
+    });
+    });
+
+
+
 app.get('/products/:id', (req, res) => {
     if(err) {
         throw err;
